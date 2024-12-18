@@ -38,6 +38,14 @@ def safety_factor(p, v, secs, n, m):
     return np.multiply.reduce(quadrants)
 
 
+def min_safety_factor(p, v, max_secs, n, m):
+    results = []
+    for i in range(1, max_secs):
+        results.append(safety_factor(p, v, i, n, m))
+
+    return results.index(min(results)) + 1
+
+
 def test():
     p = []
     v = []
@@ -56,7 +64,7 @@ def test():
 def solve():
     p = []
     v = []
-    with open("input") as f:
+    with open("inputs/day14") as f:
         for line in f:
             line = line.strip()
             p_x = int(line.split()[0].split("=")[1].split(",")[0])
@@ -67,6 +75,7 @@ def solve():
             v.append([v_x, v_y])
 
     print(f"part 1: {safety_factor(np.array(p), np.array(v), 100, 103, 101)}")
+    print(f"part 2: {min_safety_factor(np.array(p), np.array(v), 10000, 103, 101)}")
 
 
 test()
